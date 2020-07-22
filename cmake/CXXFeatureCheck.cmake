@@ -46,7 +46,8 @@ function(cxx_feature_check FILE)
       try_run(RUN_${FEATURE} COMPILE_${FEATURE}
               ${CMAKE_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/${FILE}.cpp
               CMAKE_FLAGS ${BENCHMARK_CXX_LINKER_FLAGS}
-              LINK_LIBRARIES ${BENCHMARK_CXX_LIBRARIES})
+              LINK_LIBRARIES ${BENCHMARK_CXX_LIBRARIES}
+              RUN_OUTPUT_VARIABLE RUN_${FEATURE}_OUTPUT)
     endif()
   endif()
 
@@ -59,6 +60,8 @@ function(cxx_feature_check FILE)
       message(STATUS "Performing Test ${FEATURE} -- failed to compile")
     else()
       message(STATUS "Performing Test ${FEATURE} -- compiled but failed to run")
+      message(STATUS "Return code -- ${RUN_${FEATURE}}")
+      message(STATUS "Output string -- ${RUN_${FEATURE}_OUTPUT}")
     endif()
   endif()
 endfunction()
